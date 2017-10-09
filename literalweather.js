@@ -18,16 +18,16 @@ var partlyCloudyNightImg;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
-  
+
   clearDayImg = loadImage("images/clearsky.png");
-  clearNightImg = loadImage("clearNightImg.png");
+  clearNightImg = loadImage("images/clearnight.png");
   rainImg = loadImage("images/rain.png");
   snowImg = loadImage("images/snow.png");
   sleetImg = loadImage("images/sleet.png");
   windImg = loadImage("images/wind.png");
   fogImg = loadImage("images/cloudy.png");
   cloudyImg = loadImage("images/cloudy.png");
-  partlyCloudyDayImg = loadImage("images/mist-day.png");
+  partlyCloudyDayImg = loadImage("images/07mist-day.png");
   partlyCloudyNightImg = loadImage("images/cloudy.png");
 
   query();
@@ -116,9 +116,9 @@ function drawWeather(h){
 function drawForecast(h){
   interval = width/6;
   for(var i = 1; i < 7;i++){
-    console.log(i);
+    // console.log(i);
     var w = interval * (i-1) + 40 ;
-    console.log("w,h,i",w,h,i);
+    // console.log("w,h,i",w,h,i);
     drawForecastDay(w,h,i);
   }
 }
@@ -131,12 +131,12 @@ function drawForecastDay(x,y,ind){
   day = (day + ind) % 7;
   var days = ["Sun","Mon","Tues","Wed","Thurs","Fri","Sat"];
   var label = days[day];
-  console.log("label,x,y",label,x,y);
+  // console.log("label,x,y",label,x,y);
   text(label,x,y,50,100);
   // Draw
-  console.log(ind,queryResult.daily.data)
+  // console.log(ind,queryResult.daily.data)
   var temp = queryResult.daily.data[ind].temperatureHigh;
-  console.log(temp);
+  // console.log(temp);
   text(temp,x,y+150,50,100);
 
 }
