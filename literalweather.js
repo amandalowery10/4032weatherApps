@@ -18,49 +18,81 @@ var partlyCloudyNightImg;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
-  gradientImg = loadImage("gradient.png");
+  
   clearDayImg = loadImage("images/clearsky.png");
   clearNightImg = loadImage("clearNightImg.png");
   rainImg = loadImage("images/rain.png");
   snowImg = loadImage("images/snow.png");
+  sleetImg = loadImage("images/sleet.png");
+  windImg = loadImage("images/wind.png");
+  fogImg = loadImage("images/cloudy.png");
+  cloudyImg = loadImage("images/cloudy.png");
+  partlyCloudyDayImg = loadImage("images/mist-day.png");
+  partlyCloudyNightImg = loadImage("images/cloudy.png");
 
   query();
 }
 
 function draw(){
-  image(gradientImg,0,0,gradientImg.width,gradientImg.height);
   if (queryResult == undefined){
     console.log("waiting");
   } else{
-    drawTitle(100);
+    drawBackgroundColor();
+    drawTitle();
     drawIcon(550);
     drawWeather(800);
     drawForecast(height - 400);
 
+
   }
 }
 
-function drawTitle(h){
+function drawBackgroundColor(){
+  var temp = queryResult.currently.temperature;
+  if (temp >= 70){
+    background(color('#FFA07A'));
+  } else{
+    background(color('#87CEFA'));
+  }
+
+
+}
+
+function drawTitle(){
   noStroke();
   fill(255);
-  textSize(100);
+  textSize(50);
   textFont("HelveticaNeue-Thin");
   textAlign(CENTER, CENTER);
-  text("Boston, MA", width/2, h);
+  text("Boston, MA", width/2, 60);
 }
 
 function drawIcon(h){
   var icon = queryResult.hourly.data[0].icon;
 // clear-day, clear-night, rain, snow, sleet, wind, fog, cloudy, partly-cloudy-day, or partly-cloudy-night
-  var im = clearDayImg;
+  var im;
   console.log(icon);
-  // if (icon == "clear-day"){
-  //   im = clearDayImg;
-  // } else if (icon == "clear-night"){
-  //   im = clearNightImg;
-  // } else if (icon == "rain"){
-  //   im = rainImg;
-  // }
+  if (icon == "clear-day"){
+    im = clearDayImg;
+  } else if (icon == "clear-night"){
+    im = clearNightImg;
+  } else if (icon == "rain"){
+    im = rainImg;
+  } else if (icon == "snow"){
+    im = snowImg;
+  } else if (icon == "sleet"){
+    im = sleetImg;
+  } else if (icon == "wind"){
+    im = windImg;
+  } else if (icon == "fog"){
+    im = fogImg;
+  } else if (icon == "cloudy"){
+    im = cloudyImg;
+  } else if (icon == "partly-cloudy-day"){
+    im = partlyCloudyDayImg;
+  } else {
+    im = partlyCloudyNightImg;
+  }
   image(im,width/2-75,h,im.width,im.height)
 }
 
