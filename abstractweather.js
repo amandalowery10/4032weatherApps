@@ -1,15 +1,15 @@
 //Declare global variables
 var queryResult;
-var sunnyImg;
+var clearDayImg;
+var clearNightImg;
 var rainImg;
-var clearnightImg;
 var snowImg;
 var sleetImg;
 var windImg;
 var fogImg;
-var cloudImg;
-var partlycloudydayImg;
-var partlycloudnightImg;
+var cloudyImg;
+var partlyCloudyDayImg;
+var partlyCloudyNightImg;
 var backgroundcolor;
 
 
@@ -22,15 +22,26 @@ function setup() {
   textFont("HelveticaNeue-Thin");
   textAlign(CENTER, CENTER/4);
   text("Boston, MA", 500, 200);
-
-
-
-  backgroundcolor = background(color('#00BFFF'));
-  sunnyImg = loadImage("sunnyImg.png");
-  clearSkyImg = loadImage("images/clearsky.png");
-  partlycloudynightImg = loadImage("partlycloudynightImg.png");
-  clearnightImg = loadImage("clearnightImg.png");
-  cloudyImg = loadImage("cloudImg.png");
+  var r = 400;
+  clearDayImg = loadImage("images/clearsky.png");
+  clearDayImg.resize(r,0);
+  clearNightImg = loadImage("images/clearnight.png");
+  rainImg = loadImage("images/rain.png");
+  rainImg.resize(r,0);
+  snowImg = loadImage("images/snow.png");
+  snowImg.resize(r,0);
+  sleetImg = loadImage("images/sleet.png");
+  sleetImg.resize(r,0);
+  windImg = loadImage("images/wind.png");
+  windImg.resize(r,0);
+  fogImg = loadImage("images/cloudy.png");
+  fogImg.resize(r,0);
+  cloudyImg = loadImage("images/cloudy.png");
+  cloudyImg.resize(r,0);
+  partlyCloudyDayImg = loadImage("images/07mist-day.png");
+  partlyCloudyDayImg.resize(r,0);
+  partlyCloudyNightImg = loadImage("images/cloudy.png");
+  partlyCloudyNightImg.resize(r,0);
   query();
 }
 
@@ -83,8 +94,8 @@ function draw(){
       sunsetSeconds = sunsetDate.getSeconds();
 
 
-      var dayIcon = sunnyImg; // This is the default. We might change this later
-      var nightIcon = clearnightImg;
+      var dayIcon = clearDayImg; // This is the default. We might change this later
+      var nightIcon = clearNightImg;
 
       var icon = queryResult.hourly.data[0].icon;
       // var icon = "rainy";
@@ -102,11 +113,28 @@ function draw(){
         drawLabels();
 
         // Set Day icon
-        if(icon == "clear-day"){
-          dayIcon = sunnyImg;
+        if (icon == "clear-day"){
+          dayIcon = clearDayImg;
+        } else if (icon == "clear-night"){
+          dayIcon = clearNightImg;
+        } else if (icon == "rain"){
+          dayIcon = rainImg;
+        } else if (icon == "snow"){
+          dayIcon = snowImg;
+        } else if (icon == "sleet"){
+        dayIcon = sleetImg;
+        } else if (icon == "wind"){
+          dayIcon = windImg;
+        } else if (icon == "fog"){
+          dayIcon = fogImg;
+        } else if (icon == "cloudy"){
+          dayIcon = cloudyImg;
         } else if (icon == "partly-cloudy-day"){
-          dayIcon = partlycloudydayImg;
+          dayIcon = partlyCloudyDayImg;
+        } else {
+          dayIcon = partlyCloudyNightImg;
         }
+
 
         // Set position of day icon
         t = (hours + minutes / 60 + seconds / 3600) * TAU / 12 - HALF_PI;
@@ -152,7 +180,7 @@ function draw(){
           // console.log(v.x,v.y);
 
           // Draw night icon
-          image(nightIcon, v.x+width/2, v.y+height/2, nightIcon.width/4, dayIcon.height/4);
+          image(nightIcon, v.x+width/2, v.y+height/2, nightIcon.width*40, dayIcon.height*40);
           // console.log('DOESTHISWORK');
 
           // Set position of night icon
